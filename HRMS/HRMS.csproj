@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="HRMS.Application\Adminstrator\Queries\" />
     <Folder Include="HRMS.Application\Reports\" />
   </ItemGroup>
 

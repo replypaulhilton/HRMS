@@ -1,4 +1,7 @@
-﻿using HRMS.HRMS.Presentation.WebApi.Contracts.NewUserAccount;
+﻿using HRMS.HRMS.Application.Adminstrator.Commands;
+using HRMS.HRMS.Application.Adminstrator.Queries;
+using HRMS.HRMS.Application.Adminstrator.Response;
+using HRMS.HRMS.Presentation.WebApi.Contracts.NewUserAccount;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -23,10 +26,10 @@ namespace HRMS.HRMS.Presentation.WebApi.Controllers
         [HttpPost("create-user")]
         public async Task<IActionResult> NewUserAccount(NewUserAccountRequest request)
         {
-            var command = _mapper.Map<NewCustomerAccountCommand>(request);
-            var authResult = await _mediator.Send(command);
+            var command = _mapper.Map<NewUserAccountCommand>(request);
+            var result = await _mediator.Send(command);
 
-            var response = _mapper.Map<NewUserAccountResponse>(authResult);
+            var response = _mapper.Map<NewUserAccountResponse>(result);
 
             return Ok(response);
         }
@@ -35,13 +38,9 @@ namespace HRMS.HRMS.Presentation.WebApi.Controllers
         public async Task<IActionResult> GetUsers()
         {
            
-            var request = new GetAccountsRequest(UserId);
-
-            var query = _mapper.Map<GetAccountsQuery>(request);
-            var authResult = await _mediator.Send(query);
-
-            var response = _mapper.Map<GetAccountsResponse>(authResult);
-
+            var query = _mapper.Map<GetUserQueryHandler>("");
+            var result = await _mediator.Send(query);
+            var response = _mapper.Map<GetUserListResults>(result);
             return Ok(response);
         }
     }

@@ -5,7 +5,7 @@ using MediatR;
 
 namespace HRMS.HRMS.Application.Adminstrator.Commands
 {
-    public class NewUserAccountCommandHandler : IRequestHandler<NewUserAccountCommand, NewUserAccountResult>
+    public class NewUserAccountCommandHandler : IRequest<NewUserAccountCommand>
     {
         private readonly IAdminstratorRepository _adminstratorRepository;
         public NewUserAccountCommandHandler(IAdminstratorRepository adminstratorRepository)
@@ -15,10 +15,9 @@ namespace HRMS.HRMS.Application.Adminstrator.Commands
 
         public async Task<User> Handle(NewUserAccountCommand request, CancellationToken cancellationToken)
         {
-            
-            var result = await _adminstratorRepository.CreateUser("","","");
-        
-            return new User(result);
+            var result = await _adminstratorRepository.CreateUser(request.Email, request.Role, request.Password);
+
+            return result;
 
         }
     }
